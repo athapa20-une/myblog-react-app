@@ -1,5 +1,6 @@
 // src/components/BlogList.tsx
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import { BlogPost } from '../types/types';
 import '../styles/BlogList.css';
 
@@ -12,7 +13,8 @@ const BlogList: React.FC = () => {
     const fetchPosts = async () => {
       try {
         const response = await fetch('http://127.0.0.1:8000/api/posts');
-
+        
+        // Check if the response is successful
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -37,10 +39,10 @@ const BlogList: React.FC = () => {
       <h1>Blog Posts</h1>
       <ul>
         {posts.map((post) => (
-          <li key={post.id} className="blog-item">
-            <a href={`/posts/${post.id}`}>
+          <li key={post._id} className="blog-item">
+            <Link to={`/posts/${post._id}`}> {/* Use Link instead of href */}
               <h2>{post.title}</h2>
-            </a>
+            </Link>
             <p>{post.content.substring(0, 100)}...</p>
             <div className="blog-meta">
               <p><strong>Author:</strong> {post.user.name}</p>
