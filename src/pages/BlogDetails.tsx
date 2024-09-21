@@ -8,8 +8,12 @@ interface BlogPost {
   title: string;
   content: string;
   created_at: string;
-  user_id: string;
   status: number;
+  user?: {
+    _id: string;
+    name: string;
+    email: string;
+  };
 }
 
 const BlogDetails: React.FC = () => {
@@ -48,7 +52,8 @@ const BlogDetails: React.FC = () => {
       <h1>{post.title}</h1>
       <p>{post.content}</p>
       <div className="blog-meta">
-        <p><strong>Author ID:</strong> {post.user_id}</p> {/* Displaying user_id as the author name is not provided */}
+        <p><strong>Author:</strong> {post.user ? post.user.name : 'Unknown'}</p> {/* Check if user is defined */}
+        <p><strong>Email:</strong> {post.user ? post.user.email : 'N/A'}</p>    {/* Check if user is defined */}
         <p><strong>Status:</strong> {post.status === 1 ? 'Published' : 'Draft'}</p>
         <p><strong>Created at:</strong> {new Date(post.created_at).toLocaleDateString()}</p>
       </div>
